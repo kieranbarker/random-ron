@@ -1,3 +1,5 @@
+// @ts-check
+
 ;(function() {
 
   'use strict';
@@ -9,8 +11,10 @@
   // Save the API endpoint
   const api = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
 
-  // Get the quote and button elements
+  /** @type {HTMLParagraphElement} */
   const quote = document.querySelector('#quote');
+
+  /** @type {HTMLButtonElement} */
   const button = document.querySelector('#more-ron');
 
 
@@ -21,7 +25,7 @@
   /**
    * Get the JSON data from a Fetch request
    * @param {Response} response The Response object
-   * @returns {Promise} The JSON data or an Error object
+   * @returns {Promise<any>} The JSON data or an Error object
    */
   function getJSON(response) {
     // If the response was OK, return the JSON data

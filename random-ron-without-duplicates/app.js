@@ -1,5 +1,3 @@
-// @ts-check
-
 ;(function() {
 
   'use strict';
@@ -11,13 +9,10 @@
   // Save the API endpoint
   const api = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
 
-  /** @type {string[]} */
   const prevQuotes = [];
 
-  /** @type {HTMLParagraphElement} */
-  const quote = document.querySelector('#quote');
 
-  /** @type {HTMLButtonElement} */
+  const quote = document.querySelector('#quote');
   const button = document.querySelector('#more-ron');
 
 

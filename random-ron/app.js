@@ -8,7 +8,7 @@ const button = document.querySelector('#more-ron');
 function getJSON(response) {
   if (response.ok) return response.json();
   const error = new Error('Try again later.');
-  return Promise.reject(error)
+  return Promise.reject(error);
 }
 
 function getData() {

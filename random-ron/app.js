@@ -1,76 +1,34 @@
-// @ts-check
+'use strict';
 
-;(function() {
+const api = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
 
-  'use strict';
+const quote = document.querySelector('#quote');
+const button = document.querySelector('#more-ron');
 
-  //
-  // Variables
-  //
+function getJSON(response) {
+  if (response.ok) return response.json();
+  const error = new Error('Try again later.');
+  return Promise.reject(error)
+}
 
-  // Save the API endpoint
-  const api = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
+function getData() {
+  return fetch(api).then(getJSON);
+}
 
-  /** @type {HTMLParagraphElement} */
-  const quote = document.querySelector('#quote');
+function insertQuote(quotes) {
+  quote.textContent = quotes[0];
+}
 
-  /** @type {HTMLButtonElement} */
-  const button = document.querySelector('#more-ron');
+function insertError(error) {
+  quote.textContent = error.toString();
+}
 
+function getQuote() {
+  getData()
+    .then(insertQuote)
+    .catch(insertError);
+}
 
-  //
-  // Functions
-  //
+getQuote();
 
-  /**
-   * Get the JSON data from a Fetch request
-   * @param {Response} response The Response object
-   * @returns {Promise<any>} The JSON data or an Error object
-   */
-  function getJSON(response) {
-    // If the response was OK, return the JSON data
-    if (response.ok) return response.json();
-
-    // Otherwise, return an Error object
-    const error = new Error('Try again later.');
-    return Promise.reject(error)
-  }
-
-  /**
-   * Insert the quote into the DOM
-   * @param {string[]} quotes The array of quotes
-   */
-  function insertQuote(quotes) {
-    quote.textContent = quotes[0];
-  }
-
-  /**
-   * Insert the error message into the DOM
-   * @param {Error} error The Error object
-   */
-  function insertError(error) {
-    quote.textContent = error.toString();
-  }
-
-  /**
-   * Fetch a quote and insert it into the DOM
-   */
-  function getQuote() {
-    fetch(api)
-      .then(getJSON)
-      .then(insertQuote)
-      .catch(insertError);
-  }
-
-
-  //
-  // Inits & Event Listeners
-  //
-
-  // Show a quote
-  getQuote();
-
-  // Handle click events
-  button.addEventListener('click', getQuote);
-
-})();
+button.addEventListener('click', getQuote);

@@ -11,6 +11,10 @@ function getJSON(response) {
   return Promise.reject(error)
 }
 
+function getData() {
+  return fetch(api).then(getJSON);
+}
+
 function insertQuote(quotes) {
   quote.textContent = quotes[0];
 }
@@ -20,8 +24,7 @@ function insertError(error) {
 }
 
 function getQuote() {
-  fetch(api)
-    .then(getJSON)
+  getData()
     .then(insertQuote)
     .catch(insertError);
 }

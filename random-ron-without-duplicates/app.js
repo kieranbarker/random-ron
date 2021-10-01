@@ -13,14 +13,8 @@ function getJSON(response) {
   return Promise.reject(error)
 }
 
-function getData() {
-  return fetch(api).then(getJSON);
-}
-
 function checkQuote(quotes) {
-  if (prevQuotes.includes(quotes[0])) {
-    return getData().then(checkQuote);
-  }
+  if (prevQuotes.includes(quotes[0])) return getData();
 
   if (prevQuotes.length === 50) {
     prevQuotes.shift();
@@ -29,6 +23,12 @@ function checkQuote(quotes) {
   prevQuotes.push(quotes[0]);
 
   return quotes[0];
+}
+
+function getData() {
+  return fetch(api)
+    .then(getJSON)
+    .then(checkQuote);
 }
 
 function insertQuote(quoteStr) {
@@ -41,7 +41,6 @@ function insertError(error) {
 
 function getQuote() {
   getData()
-    .then(checkQuote)
     .then(insertQuote)
     .catch(insertError);
 }
